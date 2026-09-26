@@ -3,199 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تجربة البث عبر البروكسي</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <title>beIN Sports 1 | تجربة التشغيل المباشر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #0a0a0a;
+      background: #080808;
       color: #fff;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'Cairo', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: linear-gradient(145deg, #161616, #0e0e0e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 26px 20px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    }
+    .icon-box {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 16px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #272727, #111);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      color: #e50914;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    p.sub {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    .actions {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
+      gap: 12px;
     }
-    .container {
-      width: 100%;
-      max-width: 800px;
-      background: #141414;
-      border: 1px solid #282828;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-    }
-    .header {
-      padding: 16px 20px;
-      background: #1a1a1a;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #282828;
-    }
-    .status-badge {
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: #2a2a2a;
-      color: #aaa;
-    }
-    .status-badge.live { background: #00875a; color: #fff; }
-    .status-badge.error { background: #de350b; color: #fff; }
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
+    .btn {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    video {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    .controls {
-      padding: 15px 20px;
-      display: flex;
       gap: 10px;
-      align-items: center;
-      background: #161616;
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s, filter 0.2s;
     }
-    button {
+    .btn:active { transform: scale(0.98); }
+    
+    /* أزرار المشغلات */
+    .btn-vlc {
+      background: linear-gradient(135deg, #ff8800, #e05e00);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(224, 94, 0, 0.3);
+    }
+    .btn-stream {
       background: #2563eb;
       color: #fff;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: 600;
     }
-    button:hover { background: #1d4ed8; }
-    .log-box {
-      padding: 15px 20px;
-      background: #0f0f0f;
-      border-top: 1px solid #222;
-      font-family: monospace;
+    .btn-file {
+      background: rgba(255, 255, 255, 0.08);
+      color: #eee;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .btn-copy {
+      background: transparent;
+      color: #aaa;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      font-size: 13px;
+    }
+    .btn-copy:hover { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+
+    .note {
+      margin-top: 20px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
       font-size: 12px;
-      color: #888;
-      max-height: 120px;
-      overflow-y: auto;
-      direction: ltr;
-      text-align: left;
+      color: #777;
+      line-height: 1.6;
+    }
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      background: #22c55e;
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.3s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="header">
-      <h2>beIN Sports 1 (تجربة البروكسي)</h2>
-      <span id="status" class="status-badge">جاري التحضير...</span>
+  <div class="card">
+    <div class="icon-box">
+      <i class="fa-solid fa-tv"></i>
     </div>
 
-    <div class="video-wrapper">
-      <video id="videoPlayer" controls playsinline></video>
+    <h1>beIN Sports 1</h1>
+    <p class="sub">اختر وسيلة التشغيل المفضلة على جهازك</p>
+
+    <div class="actions">
+      <!-- تشغيل عبر VLC -->
+      <button class="btn btn-vlc" onclick="openVLC()">
+        <i class="fa-solid fa-play"></i>
+        تشغيل مباشر في تطبيق VLC
+      </button>
+
+      <!-- تحميل ملف القناة M3U -->
+      <button class="btn btn-file" onclick="downloadM3U()">
+        <i class="fa-solid fa-download"></i>
+        تحميل ملف التشغيل (.m3u)
+      </button>
+
+      <!-- نسخ الرابط -->
+      <button class="btn btn-copy" onclick="copyStreamUrl()">
+        <i class="fa-regular fa-copy"></i>
+        نسخ رابط البث المباشر
+      </button>
     </div>
 
-    <div class="controls">
-      <button id="playBtn">تشغيل البث</button>
-      <span style="font-size: 13px; color: #777;">إذا لم يبدأ تلقائياً، اضغط تشغيل.</span>
+    <div class="note">
+      <i class="fa-solid fa-circle-info"></i>
+      التشغيل عبر VLC أو المشغلات الخارجية يفتح البث مباشرة من جهازك ويتخطى أي قيود أو حظر للمتصفحات.
     </div>
-
-    <div id="logs" class="log-box">السجلات ستظهر هنا...</div>
   </div>
 
+  <div id="toast" class="toast">تم نسخ الرابط بنجاح!</div>
+
   <script>
-    const PROXY_WORKER = "https://vpn-hassany-zone-66.hassanyipa.workers.dev/?url=";
-    // القناة التجريبية الأصلية (HTTP)
-    const ORIGINAL_STREAM_URL = "http://gospeed.info:8080/live/01063411411/farid1411/1.m3u8";
+    const STREAM_URL = "http://gospeed.info:8080/live/01063411411/farid1411/1.m3u8";
 
-    // رابط البث ممرر بالكامل عبر البروكسي
-    const PROXIED_URL = PROXY_WORKER + encodeURIComponent(ORIGINAL_STREAM_URL);
+    function openVLC() {
+      // فتح في تطبيق VLC لهواتف أيفون وأندرويد
+      const vlcUrl = "vlc://" + STREAM_URL;
+      window.location.href = vlcUrl;
 
-    const video = document.getElementById("videoPlayer");
-    const statusBadge = document.getElementById("status");
-    const playBtn = document.getElementById("playBtn");
-    const logs = document.getElementById("logs");
-
-    function log(msg) {
-      const time = new Date().toLocaleTimeString();
-      logs.innerHTML += `<div>[${time}] ${msg}</div>`;
-      logs.scrollTop = logs.scrollHeight;
-      console.log(`[Player] ${msg}`);
+      // إذا لم يكن التطبيق مثبت، بعد ثانيتين ينبه الزائر
+      setTimeout(() => {
+        if (!document.hidden) {
+          alert("تأكد من تثبيت تطبيق VLC المجاني من المتجر لفتح البث بنقرة واحدة.");
+        }
+      }, 2000);
     }
 
-    function initPlayer() {
-      log("جاري تجهيز المشغل برابط البروكسي...");
-
-      if (Hls.isSupported()) {
-        const hls = new Hls({
-          enableWorker: true,
-          lowLatencyMode: true,
-        });
-
-        hls.loadSource(PROXIED_URL);
-        hls.attachMedia(video);
-
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          statusBadge.textContent = "متصل بالبث";
-          statusBadge.classList.add("live");
-          log("تم قراءة ملف الـ Manifest بنجاح عبر البروكسي!");
-          video.play().catch(e => {
-            log("يتطلب تفاعل لبدء الصوت/الفيديو: " + e.message);
-          });
-        });
-
-        hls.on(Hls.Events.ERROR, function (event, data) {
-          log("خطأ: " + data.type + " - " + data.details);
-          if (data.fatal) {
-            statusBadge.textContent = "فشل التحميل";
-            statusBadge.classList.add("error");
-            switch (data.type) {
-              case Hls.ErrorTypes.NETWORK_ERROR:
-                log("خطأ شبكة، جاري إعادة المحاولة...");
-                hls.startLoad();
-                break;
-              case Hls.ErrorTypes.MEDIA_ERROR:
-                log("خطأ وسائط، جاري محاولة الاستعادة...");
-                hls.recoverMediaError();
-                break;
-              default:
-                hls.destroy();
-                break;
-            }
-          }
-        });
-
-      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        // دعم متصفح Safari على أجهزة Apple
-        video.src = PROXIED_URL;
-        video.addEventListener("loadedmetadata", () => {
-          statusBadge.textContent = "متصل (Safari)";
-          statusBadge.classList.add("live");
-          video.play();
-        });
-      } else {
-        statusBadge.textContent = "المتصفح غير مدعوم";
-        statusBadge.classList.add("error");
-        log("المتصفح لا يدعم HLS");
-      }
+    function downloadM3U() {
+      // إنشاء ملف M3U فوري لتشغيله في أي مشغل فيديو بضغطة زر
+      const m3uContent = `#EXTM3U\n#EXTINF:-1,beIN Sports 1\n${STREAM_URL}`;
+      const blob = new Blob([m3uContent], { type: "audio/x-mpegurl" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "beIN_Sports_1.m3u";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
-    playBtn.onclick = () => {
-      video.play().then(() => {
-        log("بدأ العرض بنجاح.");
-      }).catch(err => {
-        log("تعذر التشغيل: " + err.message);
+    function copyStreamUrl() {
+      navigator.clipboard.writeText(STREAM_URL).then(() => {
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2000);
       });
-    };
-
-    window.onload = initPlayer;
+    }
   </script>
 </body>
 </html>
